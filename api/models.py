@@ -32,4 +32,4 @@ class AgentUser(models.Model):
     verification_step = models.CharField(max_length=10, default="1")
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.user.username}"
