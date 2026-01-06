@@ -119,7 +119,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-
 #AUTH_USER_MODEL
 AUTH_USER_MODEL = 'api.CustomUSer'
 
