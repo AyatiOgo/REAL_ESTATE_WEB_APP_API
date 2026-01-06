@@ -21,8 +21,8 @@ class RegistrationView(APIView):
         
 class HouseView(APIView):
 
-    def get_permissions(self, request):
-        if request.method == 'GET':
+    def get_permissions(self):
+        if self.request.method == 'GET':
             return []
         return [IsAuthenticated(), IsAgent()]
 
@@ -36,9 +36,22 @@ class HouseView(APIView):
         serializer = HouseSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save(house_agent = agent)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(
+                { 
+                    "success" : True,  
+                    "message" : "House Uploaded Succesfully",  
+                    "data" : serializer.data,  
+                    "error" : serializer.errors,  
+                 
+                 }, status=status.HTTP_201_CREATED)
         else:
-            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+            return Response( {
+                "success" : False,
+                "message" : "House Upload Failed",
+                "data" : serializer.data,
+                "errors" : serializer.errors,
+
+            }, status=status.HTTP_400_BAD_REQUEST)
 
 
     

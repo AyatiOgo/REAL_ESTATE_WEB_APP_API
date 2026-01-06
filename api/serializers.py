@@ -21,10 +21,9 @@ class RegisterUserSerializer(ModelSerializer):
 
 
 class HouseSerializer(ModelSerializer):
-    house_agent = AgentUser
     class Meta :
         model = HouseModel
-        fields = ["house_agent", "house_name", "house_description", "house_location", 
+        fields = ["id", "house_name", "house_description", "house_location", 
                   "house_images", "house_price", "house_size", "house_rooms_no", "house_toilet_no",
                    "house_amenties", "house_category"
                     ]

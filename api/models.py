@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from main.settings import AUTH_USER_MODEL
 
 #USER MODEL
 
@@ -8,7 +9,6 @@ class CustomUSer(AbstractUser):
         ("User", "User"),
         ("Agent", "Agent"),
     )
-
     roles = models.CharField(max_length=40, choices=ROLE_CHOICES, default="User")
 
 
@@ -42,7 +42,7 @@ class HouseModel(models.Model):
         ("SELFCON", "Selfcon"),
     )
 
-    house_agent = models.ForeignKey(AgentUser, on_delete=models.CASCADE)
+    house_agent = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     house_name = models.CharField(max_length=100)
     house_description = models.CharField(max_length=1500)
     house_location = models.CharField(max_length=500)
