@@ -33,3 +33,23 @@ class AgentUser(models.Model):
 
     def __str__(self):
         return f"{self.user.username}"
+
+class HouseModel(models.Model):
+    CATEGORY_CHOICES = (
+        ("ONE_BEDROOM", "One Bedroom"),
+        ("TWO_BEDROOM", "Two Bedroom"),
+        ("THREE_BEDROOM", "Three Bedroom"),
+        ("SELFCON", "Selfcon"),
+    )
+
+    house_agent = models.ForeignKey(AgentUser, on_delete=models.CASCADE)
+    house_name = models.CharField(max_length=100)
+    house_description = models.CharField(max_length=1500)
+    house_location = models.CharField(max_length=500)
+    house_images = models.ImageField(upload_to="media")
+    house_price = models.CharField(max_length=30)
+    house_size = models.CharField(max_length=30)
+    house_rooms_no = models.CharField(max_length=30)
+    house_toilet_no = models.CharField(max_length=30)
+    house_amenties = models.CharField(max_length=1500)
+    house_category = models.CharField(max_length=80, choices=CATEGORY_CHOICES)
