@@ -56,6 +56,7 @@ class AgentKYCView(APIView):
         except AgentUser.DoesNotExist:
             return Response({"message": "Agent Does Not Exist"}, status=status.HTTP_404_NOT_FOUND)
         serializer = AgentKYCSerializer(agent, data = request.data)
+
         if serializer.is_valid():
             serializer.save(verification_step="3", verification_status="Success" )
             return Response({ 
@@ -64,7 +65,6 @@ class AgentKYCView(APIView):
                 "data" : serializer.data,  
                 "errors" : serializer.errors
                 }, status=status.HTTP_201_CREATED)
-        
         else:
             return Response({
                 "success" : False,
