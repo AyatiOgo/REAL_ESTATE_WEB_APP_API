@@ -28,4 +28,13 @@ class HouseSerializer(ModelSerializer):
                    "house_amenties", "house_category"
                     ]
 
+class AgentProfileSerializer(ModelSerializer):
+    class Meta:
+        model = AgentUser
+        fields = ["first_name","last_name", "about", "phone", "profile_img", ]
+
+class AgentKYCSerializer(ModelSerializer):
+    class Meta:
+        model = AgentUser
+        fields = ["bvn_number", "nin_document" ]
 

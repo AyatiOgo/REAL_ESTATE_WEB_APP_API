@@ -5,4 +5,5 @@ urlpatterns = [
     path('register-user/', RegistrationView.as_view(), name='register-user'),
     path('', HouseView.as_view(), name='home'),
     path('upload-house/', HouseView.as_view(), name='upload-house'),
+    path('agent-profile-verification/', AgentProfileVerificationView.as_view(), name='agent-profile-verification'),
 ]
