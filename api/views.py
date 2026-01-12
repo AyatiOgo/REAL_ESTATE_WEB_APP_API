@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from .models import CustomUSer, AgentUser, HouseModel
 from .serializers import RegisterUserSerializer, HouseSerializer, AgentProfileSerializer,AgentKYCSerializer
-from rest_framework.views import APIView
+from rest_framework.views import APIView 
 from rest_framework.response import Response
 from rest_framework import status
 from .permissons import IsAgent
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import ListAPIView
+from .paginators import CustomPagination
 
 # Create your views here.
 
@@ -22,7 +24,6 @@ class RegistrationView(APIView):
 
 class AgentProfileVerificationView(APIView):
     permission_classes = [IsAuthenticated, IsAgent]
-
     def put(self, request ):
         user = request.user
         try:
@@ -55,7 +56,7 @@ class AgentKYCView(APIView):
             agent = AgentUser.objects.get(user=user)
         except AgentUser.DoesNotExist:
             return Response({"message": "Agent Does Not Exist"}, status=status.HTTP_404_NOT_FOUND)
-        serializer = AgentKYCSerializer(agent, data = request.data)
+        serializer = AgentKYCSerializer(agent, data=request.data)
 
         if serializer.is_valid():
             serializer.save(verification_step="3", verification_status="Success" )
@@ -78,11 +79,16 @@ class HouseView(APIView):
         if self.request.method == 'GET':
             return []
         return [IsAuthenticated(), IsAgent()]
+    
+    paginator_class = CustomPagination
 
     def get(self, request):
-        house =  HouseModel.objects.all()
-        serializer  = HouseSerializer(house, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        queryset =  HouseModel.objects.all()
+        paginator = self.paginator_class()
+        page = paginator.paginate_queryset(queryset, request)
+        if page is not None:
+            serializer  = HouseSerializer(page, many=True)
+            return paginator.get_paginated_response(serializer.data)
     
     def post(self, request):
         agent = request.user
@@ -106,6 +112,6 @@ class HouseView(APIView):
 
             }, status=status.HTTP_400_BAD_REQUEST)
 
-
-    
-    
+class ListClassView(ListAPIView):
+    queryset = HouseModel.objects.all()
+    serializer_class = HouseSerializer

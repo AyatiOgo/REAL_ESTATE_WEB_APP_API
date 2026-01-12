@@ -11,12 +11,10 @@ class RegisterUserSerializer(ModelSerializer):
     def create(self, validated_data):
         roles = validated_data.pop('roles')
         user = get_user_model()
-
         validated_user = user.objects.create_user(**validated_data, roles=roles)
 
         if roles == "Agent":
             AgentUser.objects.create(user=validated_user)
-
         return validated_user
 
 
