@@ -47,7 +47,7 @@ class HouseModel(models.Model):
     house_name = models.CharField(max_length=100)
     house_description = models.CharField(max_length=1500)
     house_location = models.CharField(max_length=500)
-    house_images = models.ImageField(upload_to="media")
+    house_images = models.ImageField(upload_to="houses/")
     house_price = models.CharField(max_length=30)
     house_size = models.CharField(max_length=30)
     house_rooms_no = models.CharField(max_length=30)
