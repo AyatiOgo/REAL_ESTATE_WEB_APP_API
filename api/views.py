@@ -8,6 +8,7 @@ from .permissons import IsAgent
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import ListAPIView
 from .paginators import CustomPagination
+from django_filters.rest_framework import DjangoFilterBackend
 
 # Create your views here.
 
@@ -79,11 +80,15 @@ class HouseView(APIView):
         if self.request.method == 'GET':
             return []
         return [IsAuthenticated(), IsAgent()]
-    
     paginator_class = CustomPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['house_category']
 
     def get(self, request):
         queryset =  HouseModel.objects.all()
+        for backend in self.filter_backends:
+            queryset = backend().filter_queryset(request, queryset, self )
+
         paginator = self.paginator_class()
         page = paginator.paginate_queryset(queryset, request)
         if page is not None:
@@ -112,6 +117,3 @@ class HouseView(APIView):
 
             }, status=status.HTTP_400_BAD_REQUEST)
 
-class ListClassView(ListAPIView):
-    queryset = HouseModel.objects.all()
-    serializer_class = HouseSerializer

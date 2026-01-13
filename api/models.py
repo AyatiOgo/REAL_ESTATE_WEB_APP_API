@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from main.settings import AUTH_USER_MODEL
+from cities_light.models import Country, Region
 
 #USER MODEL
 
@@ -53,3 +54,7 @@ class HouseModel(models.Model):
     house_toilet_no = models.CharField(max_length=30)
     house_amenties = models.CharField(max_length=1500)
     house_category = models.CharField(max_length=80, choices=CATEGORY_CHOICES)
+    country = models.ForeignKey(Country, on_delete=models.PROTECT, null=True, blank=True)
+    state = models.ForeignKey(Region, on_delete=models.PROTECT, null=True, blank= True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, null= True, blank=True)

@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_filters',
+    'cities_light',
 ]
 
 MIDDLEWARE = [
@@ -130,8 +132,32 @@ REST_FRAMEWORK = {
 
     'DEFAULT_PAGINATION_CLASS' : 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE' : 2,
+
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
 }
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
 }
+
+
+# CITIES LIGHT CONFIG
+
+CITIES_LIGHT_USE_RESOURCE = False
+
+CITIES_LIGHT_TRANSLATION_LANGUAGES = ['en']
+
+CITIES_LIGHT_INCLUDE_COUNTRIES = [
+    'NG',  # Nigeria
+    'GH',  # Ghana
+    'US',
+    'GB',
+]
+
+CITIES_LIGHT_INCLUDE_CITY_TYPES = [
+    'PPL',   # populated place
+    'PPLA',  # admin capital
+    'PPLC',  # country capital
+]
