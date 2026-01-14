@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import CustomUSer, AgentUser, HouseModel
-from .serializers import RegisterUserSerializer, HouseSerializer, AgentProfileSerializer,AgentKYCSerializer
+from .serializers import RegisterUserSerializer, HouseSerializer, AgentProfileSerializer,AgentKYCSerializer, UserProfileSerializer
 from rest_framework.views import APIView 
 from rest_framework.response import Response
 from rest_framework import status
@@ -131,3 +131,16 @@ class HouseView(APIView):
 
             }, status=status.HTTP_400_BAD_REQUEST)
 
+class UserProfileView(APIView):
+    def get(self, request, user):
+        try:
+            user_profile = CustomUSer.objects.get(username = user)
+        except CustomUSer.DoesNotExist:
+            return Response({"message": "user does not exist"})
+        
+        serializer = UserProfileSerializer(user_profile)
+        return Response({
+            "success": True,
+            "message": "user profile fetched",
+            "data": serializer.data,
+        })

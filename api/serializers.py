@@ -54,3 +54,8 @@ class AgentKYCSerializer(ModelSerializer):
     class Meta:
         model = AgentUser
         fields = ["bvn_number", "nin_document" ]
+
+class UserProfileSerializer(ModelSerializer):
+    class Meta:
+        model = CustomUSer
+        fields = ["username", "email" ]
