@@ -74,6 +74,20 @@ class AgentKYCView(APIView):
                 "data" : serializer.data,
                 "errors" : serializer.errors,
             },status=status.HTTP_400_BAD_REQUEST )
+        
+class AgentProfileView(APIView):
+    def get(self, request, user):
+        try:
+            agent = AgentUser.objects.get(user__username = user)
+        except AgentUser.DoesNotExist:
+            return Response({"message": "Agent Doesn't exist"})
+        
+        serializer = AgentProfileSerializer(agent)
+        return Response({
+            "success" : True,
+            "message": "Agent Profile Feched",
+            "data" : serializer.data
+        })
 
 class HouseView(APIView):
     def get_permissions(self):

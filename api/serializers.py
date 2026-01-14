@@ -48,10 +48,9 @@ class HouseSerializer(ModelSerializer):
 class AgentProfileSerializer(ModelSerializer):
     class Meta:
         model = AgentUser
-        fields = ["first_name","last_name", "about", "phone", "profile_img", ]
+        fields = ["first_name","last_name", "about", "phone", "profile_img", "verification_status", "rating" ]
 
 class AgentKYCSerializer(ModelSerializer):
     class Meta:
         model = AgentUser
         fields = ["bvn_number", "nin_document" ]
-

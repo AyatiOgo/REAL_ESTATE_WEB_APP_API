@@ -7,4 +7,5 @@ urlpatterns = [
     path('upload-house/', HouseView.as_view(), name='upload-house'),
     path('agent-profile-verification/', AgentProfileVerificationView.as_view(), name='agent-profile-verification'),
     path('agent-kyc-verification/', AgentKYCView.as_view(), name='agent-kyc-verification'),
+    path('agent-profile/<str:user>/', AgentProfileView.as_view(), name='agent-profile'),
 ]

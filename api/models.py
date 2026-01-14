@@ -28,7 +28,7 @@ class AgentUser(models.Model):
     bvn_number = models.CharField(max_length=50, null=True, blank=True)
     nin_document = models.ImageField(null=True, blank=True, upload_to="media")
     profile_img = models.ImageField(null=True, blank=True)
-    Rating = models.PositiveIntegerField(null=True, blank=True)
+    rating = models.PositiveIntegerField(null=True, blank=True)
     verification_status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending")
     verification_step = models.CharField(max_length=10, default="1")
 
