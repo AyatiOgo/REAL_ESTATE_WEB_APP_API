@@ -3,6 +3,7 @@ from rest_framework.serializers import ModelSerializer
 from .models import CustomUSer, AgentUser, HouseModel
 from django.contrib.auth import get_user_model
 from cities_light.models import Country, Region
+from .validator import validate_country_and_state
 
 class RegisterUserSerializer(ModelSerializer):
     class Meta:
@@ -32,11 +33,9 @@ class HouseSerializer(ModelSerializer):
         country = attrs.get('country')
         state = attrs.get('state')
 
-        if state and state.country != country:
-            raise serializers.ValidationError(
-                "State does not belong to selected country."
-            )
-        
+        if country and state :
+            validate_country_and_state(country, state)
+            
         return attrs
     
     def get_country_name(self, obj):

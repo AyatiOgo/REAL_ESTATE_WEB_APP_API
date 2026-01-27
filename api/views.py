@@ -96,7 +96,7 @@ class HouseView(APIView):
         return [IsAuthenticated(), IsAgent()]
     paginator_class = CustomPagination
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['house_category']
+    filterset_fields = ['house_category', 'country', 'state']
 
     def get(self, request):
         queryset =  HouseModel.objects.all()
