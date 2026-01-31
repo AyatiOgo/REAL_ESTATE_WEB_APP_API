@@ -9,6 +9,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import ListAPIView
 from .paginators import CustomPagination
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
+from .filters import HouseFilter
 
 # Create your views here.
 
@@ -95,8 +97,10 @@ class HouseView(APIView):
             return []
         return [IsAuthenticated(), IsAgent()]
     paginator_class = CustomPagination
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_class = HouseFilter
     filterset_fields = ['house_category', 'country', 'state']
+    search_fields = ['^house_name', 'house_description', 'house_category' ]
 
     def get(self, request):
         queryset =  HouseModel.objects.all()
